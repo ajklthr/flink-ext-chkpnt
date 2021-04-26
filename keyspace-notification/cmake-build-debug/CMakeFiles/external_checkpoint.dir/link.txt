@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/external_checkpoint.dir/main.cpp.o -o external_checkpoint  /usr/local/lib/libhiredis.1.0.0.dylib /usr/local/lib/libevent_core-2.1.7.dylib 
