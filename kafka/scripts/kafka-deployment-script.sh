@@ -9,6 +9,7 @@ cd /etc/systemd/system/
 curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/rbala19/flink-ext-chkpnt/contents/kafka/scripts/kafka.service > kafka.service 
 curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/rbala19/flink-ext-chkpnt/contents/kafka/scripts/zookeeper.service > zookeeper.service
 cd /home/shared/kafka
+mkdir /tmp/zookeeper
 echo $1 > /tmp/zookeeper/myid
 systemctl enable zookeeper 
 systemctl start zookeeper 
