@@ -7,6 +7,8 @@ curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/r
 curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/rbala19/flink-ext-chkpnt/contents/kafka/scripts/zookeeper.properties > config/zookeeper.properties
 cd /etc/systemd/system/
 curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/rbala19/flink-ext-chkpnt/contents/kafka/scripts/kafka.service > kafka.service 
+curl -s -H "Accept:application/vnd.github.v3.raw" https://api.github.com/repos/rbala19/flink-ext-chkpnt/contents/kafka/scripts/zookeeper.service > zookeeper.service
 cd /home/shared/kafka
-bin/zookeeper-server-start.sh config/zookeeper.properties &
+systemctl enable zookeeper 
+systemctl start zookeeper 
 echo Setup is almost complete - set a unique broker id within server.properties and run the following command to start kafka: \ kafka/bin/kafka-server-start.sh kafka/config/server.properties
