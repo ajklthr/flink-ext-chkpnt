@@ -1,0 +1,64 @@
+{
+  "nodes" : [ {
+    "id" : 1,
+    "type" : "Source: Custom Source",
+    "pact" : "Data Source",
+    "contents" : "Source: Custom Source",
+    "parallelism" : 1
+  }, {
+    "id" : 2,
+    "type" : "Flat Map",
+    "pact" : "Operator",
+    "contents" : "Flat Map",
+    "parallelism" : 2,
+    "predecessors" : [ {
+      "id" : 1,
+      "ship_strategy" : "REBALANCE",
+      "side" : "second"
+    } ]
+  }, {
+    "id" : 4,
+    "type" : "feedback-union",
+    "pact" : "Operator",
+    "contents" : "feedback-union",
+    "parallelism" : 12,
+    "predecessors" : [ {
+      "id" : 2,
+      "ship_strategy" : "HASH",
+      "side" : "second"
+    } ]
+  }, {
+    "id" : 6,
+    "type" : "functions",
+    "pact" : "Operator",
+    "contents" : "functions",
+    "parallelism" : 12,
+    "predecessors" : [ {
+      "id" : 4,
+      "ship_strategy" : "FORWARD",
+      "side" : "second"
+    } ]
+  }, {
+    "id" : 8,
+    "type" : "feedback",
+    "pact" : "Operator",
+    "contents" : "feedback",
+    "parallelism" : 12,
+    "predecessors" : [ {
+      "id" : 6,
+      "ship_strategy" : "HASH",
+      "side" : "second"
+    } ]
+  }, {
+    "id" : 10,
+    "type" : "Sink: Unnamed",
+    "pact" : "Data Sink",
+    "contents" : "Sink: Unnamed",
+    "parallelism" : 1,
+    "predecessors" : [ {
+      "id" : 6,
+      "ship_strategy" : "REBALANCE",
+      "side" : "second"
+    } ]
+  } ]
+}
