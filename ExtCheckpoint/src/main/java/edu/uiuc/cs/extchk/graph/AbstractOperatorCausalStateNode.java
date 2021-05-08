@@ -95,6 +95,19 @@ public abstract class AbstractOperatorCausalStateNode {
     }
   }
 
-   public abstract void processCompaction(GraphCompactionContext graphCompactionContext) ;
+  public abstract void calculateConsistentCut(ConsistentCutContext consistentCutContext);
+
+  public void findLatestHappensBeforeForOperator(String operatorId,
+      ConsistentCutContext consistentCutContext) {
+    if (this.happensBefore != null && this.happensBefore.getOperatorId().equals(operatorId)) {
+      consistentCutContext.setLatestHappensBeforeForOperator(this.getHappensBefore());
+    }
+    if (this.parent == null) {
+      consistentCutContext.setLatestHappensBeforeForOperator(
+          consistentCutContext.getInitialStateForOperator(operatorId));
+    } else {
+      this.findLatestHappensBeforeForOperator(operatorId, consistentCutContext);
+    }
+  }
 
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 public class FlinkDataflowDAG {
 
@@ -21,7 +22,7 @@ public class FlinkDataflowDAG {
     }
   }
 
-  public List<String> getCausalUpstreamDependencies(String operatorId) {
+  public Set<String> getCausalUpstreamDependencies(String operatorId) {
     return null;
   }
 

@@ -2,6 +2,7 @@ package edu.uiuc.cs.extchk.graph;
 
 import edu.uiuc.cs.extchk.flink.dag.FlinkDataflowDAG;
 import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CausalStateGraph {
@@ -11,6 +12,14 @@ public class CausalStateGraph {
 
   public AbstractOperatorCausalStateNode getEarliestStateNodeForOperatorId(String operatorId) {
     return nodesIndexedByOperatorId.get(operatorId);
+  }
+
+  public AbstractOperatorCausalStateNode getNthStateForOperatorId(String operatorId, int n) {
+    return null;
+  }
+
+  private Set<String> getAllOperators() {
+    return null;
   }
 
   public void addNode(OperatorCausalStateNode operatorCausalStateNode)
@@ -32,17 +41,36 @@ public class CausalStateGraph {
 
   }
 
-  public void compact() throws IOException {
+  /**
+   * Calculate a maximal consistent cut including nth sink state
+   *
+   * @throws IOException
+   */
+  private void calculateConsistentCut(ConsistentCutContext consistentCutContext) throws IOException {
     //TODO Multi-threading must acquire locks on nodes
-    FlinkDataflowDAG flinkDataflowDAG = new FlinkDataflowDAG();
-    String sinkOperatorId = flinkDataflowDAG.getSinkOperatorId();
-    GraphCompactionContext graphCompactionContext = new GraphCompactionContext(flinkDataflowDAG);
-
-
+    AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = getNthStateForOperatorId(
+        consistentCutContext.getFlinkDataFlowDAG().getSinkOperatorId(), 2);
+    if (abstractOperatorCausalStateNode == null) {
+      consistentCutContext.cancel();
+      return;
+    }
+    abstractOperatorCausalStateNode.calculateConsistentCut(consistentCutContext);
   }
 
-  public void checkpoint() {
-
+  public void checkpoint() throws IOException {
+    CheckpointContextImpl checkpointContext = new CheckpointContextImpl(1,
+        new FlinkDataflowDAG()); //TODO set checkpoint Id
+    calculateConsistentCut(checkpointContext);
+    //Snapshot checkpoint + Channel state calculation - Ignore for now
+    //Compact graph
+    //If multi-threading appropriate locking needed
+    for (String operatorId : getAllOperators()) {
+      AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = checkpointContext
+          .getEarliestNodeInCheckPoint(operatorId);
+      abstractOperatorCausalStateNode.parent = null;
+      this.nodesIndexedByOperatorId.put(operatorId, abstractOperatorCausalStateNode);
+    }
   }
+
 
 }
