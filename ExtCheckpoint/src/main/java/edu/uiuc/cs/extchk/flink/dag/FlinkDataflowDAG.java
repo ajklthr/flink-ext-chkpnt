@@ -17,6 +17,8 @@ public class FlinkDataflowDAG {
 
   private JsonNode flinkPlan;
 
+  private final int NUMOPERATORS = 5;
+
   public FlinkDataflowDAG() throws IOException {
     try (InputStream in = Thread.currentThread().getContextClassLoader()
         .getResourceAsStream(WORD_COUNT_PLAN_FILE_NAME)) {
@@ -26,7 +28,7 @@ public class FlinkDataflowDAG {
 
   public Set<String> getCausalUpstreamDependencies(String operatorId) {
     Set<String> orderedSet = new TreeSet<>();
-    for (int i = Integer.valueOf(operatorId) - 1; i >= 1; i--) {
+    for (int i = Integer.valueOf(operatorId) - 1; i >= 0; i--) {
       orderedSet.add(String.valueOf(i));
     }
     return orderedSet;
@@ -34,10 +36,10 @@ public class FlinkDataflowDAG {
 
   //create
   public int getTotalOperatorInstances() {
-    return 4;
+    return NUMOPERATORS;
   }
 
   public String getSinkOperatorId() {
-    return "4";
+    return String.valueOf(NUMOPERATORS - 1);
   }
 }

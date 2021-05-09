@@ -34,6 +34,7 @@ public class KeyspaceNotification {
     private final Jedis jedis;
     private static Map<String, Class> deserializeMap;
     private static CausalStateGraph graph;
+    private static final int CHECKPOINTINGINTERVAL = 10;
 
     static{
         graph = new CausalStateGraph();
@@ -95,6 +96,8 @@ public class KeyspaceNotification {
 
         @Override
         public void run() {
+
+            int nodeAddedCount = 0;
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     String item = String.valueOf(workQueue.take());
@@ -126,9 +129,13 @@ public class KeyspaceNotification {
                     }
                     OperatorCausalStateNode nodeToAdd = new OperatorCausalStateNode(value, inputCounts, outputCounts);
                     KeyspaceNotification.graph.addNode(nodeToAdd);
+                    nodeAddedCount += 1;
 
                     //Checkpointing
-                    KeyspaceNotification.graph.checkpoint();
+                    if (nodeAddedCount % KeyspaceNotification.CHECKPOINTINGINTERVAL == 0) {
+                        KeyspaceNotification.graph.checkpoint();
+                    }
+
 
 
                 } catch (InterruptedException | InvalidProtocolBufferException ex) {

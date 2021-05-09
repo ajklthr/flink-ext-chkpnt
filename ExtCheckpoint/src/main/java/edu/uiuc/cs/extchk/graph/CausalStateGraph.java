@@ -19,13 +19,13 @@ public class CausalStateGraph {
   public AbstractOperatorCausalStateNode getNthStateForOperatorId(String operatorId, int n) {
     AbstractOperatorCausalStateNode pointer = getEarliestStateNodeForOperatorId(operatorId);
     for (int i = 0; i < n; i++) {
-      pointer = pointer.getParent();
+      pointer = pointer.getChild();
     }
     return pointer;
   }
 
   private Set<String> getAllOperators() {
-    return new HashSet<>(new HashSet<>(Arrays.asList("1","2","3","4")));
+    return new HashSet<>(new HashSet<>(Arrays.asList("0,","1","2","3","4")));
   }
 
   public void addNode(OperatorCausalStateNode operatorCausalStateNode)
@@ -71,8 +71,7 @@ public class CausalStateGraph {
     //Compact graph
     //If multi-threading appropriate locking needed
     for (String operatorId : getAllOperators()) {
-      AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = checkpointContext
-          .getEarliestNodeInCheckPoint(operatorId);
+      AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = getEarliestStateNodeForOperatorId(operatorId);
       abstractOperatorCausalStateNode.parent = null;
       this.nodesIndexedByOperatorId.put(operatorId, abstractOperatorCausalStateNode);
     }
