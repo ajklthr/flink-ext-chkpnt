@@ -1,5 +1,6 @@
 package edu.uiuc.cs.extchk.graph;
 
+import edu.uiuc.cs.extchk.operators.VectorTimeStamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,12 +19,12 @@ public class OperatorCausalStateNode extends AbstractOperatorCausalStateNode {
 
 
   public OperatorCausalStateNode(byte[] state, Map<Integer, Integer> inChannelStates,
-                                 Map<Integer, Integer> outChannelStates, String operatorID) {
+                                 Map<Integer, Integer> outChannelStates, String operatorID, VectorTimeStamp vectorTimeStamp, boolean isOrdered) {
     this.state = state;
     this.inChannelStates = inChannelStates;
     this.outChannelStates = outChannelStates;
     this.operatorId = operatorID;
-    this.isOrdered = false;
+    this.isOrdered = isOrdered;
 
   }
 

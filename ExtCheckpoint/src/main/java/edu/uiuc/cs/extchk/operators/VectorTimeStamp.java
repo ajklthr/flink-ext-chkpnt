@@ -1,17 +1,18 @@
 package edu.uiuc.cs.extchk.operators;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VectorTimeStamp {
   public int ID;
-  public ArrayList<Integer> VT;
+  public List<Integer> VT;
 
   public VectorTimeStamp(int indexID) {
     ID = indexID;
     VT = new ArrayList<Integer>();
   }
 
-  public VectorTimeStamp(int indexID, ArrayList<Integer> VT) {
+  public VectorTimeStamp(int indexID, List<Integer> VT) {
     ID = indexID;
     this.VT = VT;
   }

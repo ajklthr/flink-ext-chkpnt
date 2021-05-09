@@ -73,16 +73,17 @@ public abstract class AbstractOperatorCausalStateNode {
         }
       }
     }
-
-    if (this.getHappensBefore() != null && this.getHappensBefore().getVectorTimeStamp()
-        .isCausallyBefore(stateNode.getVectorTimeStamp())) {
-      if (this.child == null) {
-        this.child = stateNode;
-        stateNode.parent = this;
-      } else {
-        this.child.orderStateNode(stateNode);
-      }
+    if (this.child == null) {
+      this.child = stateNode;
+      stateNode.parent = this;
+    } else {
+      this.child.orderStateNode(stateNode);
     }
+
+/*    if (this.getHappensBefore() != null && this.getHappensBefore().getVectorTimeStamp()
+        .isCausallyBefore(stateNode.getVectorTimeStamp())) {
+
+    }*/
   }
 
   public void notifyOperatorStateNode(AbstractOperatorCausalStateNode stateNode) {

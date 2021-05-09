@@ -25,7 +25,7 @@ public class CausalStateGraph {
   }
 
   private Set<String> getAllOperators() {
-    return new HashSet<>(new HashSet<>(Arrays.asList("0,","1","2","3","4")));
+    return new HashSet<>(new HashSet<>(Arrays.asList("0,", "1", "2", "3", "4")));
   }
 
   public void addNode(OperatorCausalStateNode operatorCausalStateNode)
@@ -35,8 +35,9 @@ public class CausalStateGraph {
     if (earliestOperatorCausalStateNode == null) {
       nodesIndexedByOperatorId
           .put(operatorCausalStateNode.getOperatorId(), operatorCausalStateNode);
+    } else {
+      earliestOperatorCausalStateNode.orderStateNode(operatorCausalStateNode);
     }
-    earliestOperatorCausalStateNode.orderStateNode(operatorCausalStateNode);
 
     FlinkDataflowDAG flinkDataflowDAG = new FlinkDataflowDAG();
     for (String causalOperatorId : flinkDataflowDAG
@@ -52,7 +53,8 @@ public class CausalStateGraph {
    *
    * @throws IOException
    */
-  private void calculateConsistentCut(ConsistentCutContext consistentCutContext) throws IOException {
+  private void calculateConsistentCut(ConsistentCutContext consistentCutContext)
+      throws IOException {
     //TODO Multi-threading must acquire locks on nodes
     AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = getNthStateForOperatorId(
         consistentCutContext.getFlinkDataFlowDAG().getSinkOperatorId(), 2);
@@ -71,7 +73,8 @@ public class CausalStateGraph {
     //Compact graph
     //If multi-threading appropriate locking needed
     for (String operatorId : getAllOperators()) {
-      AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = getEarliestStateNodeForOperatorId(operatorId);
+      AbstractOperatorCausalStateNode abstractOperatorCausalStateNode = getEarliestStateNodeForOperatorId(
+          operatorId);
       abstractOperatorCausalStateNode.parent = null;
       this.nodesIndexedByOperatorId.put(operatorId, abstractOperatorCausalStateNode);
     }

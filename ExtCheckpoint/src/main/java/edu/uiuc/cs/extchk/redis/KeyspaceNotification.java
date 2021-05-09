@@ -5,6 +5,7 @@ import edu.uiuc.cs.extchk.graph.CausalStateGraph;
 import edu.uiuc.cs.extchk.graph.CheckpointContextImpl;
 import edu.uiuc.cs.extchk.graph.OperatorCausalStateNode;
 import edu.uiuc.cs.extchk.operators.*;
+import java.util.Arrays;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
@@ -38,6 +39,20 @@ public class KeyspaceNotification {
 
     static{
         graph = new CausalStateGraph();
+
+        OperatorCausalStateNode node0 = new OperatorCausalStateNode(null,
+            new HashMap<>(),
+            new HashMap<>(),
+            "1", new VectorTimeStamp(0, Arrays.asList(new Integer[]{0, 0, 0, 0, 0})), true);
+        OperatorCausalStateNode node1 = new OperatorCausalStateNode(null,
+            new HashMap<>(),
+            new HashMap<>(),
+            "2", new VectorTimeStamp(0, Arrays.asList(new Integer[]{0, 0, 0, 0, 0})), true);
+        try {
+            graph.addNode(node1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public KeyspaceNotification(String host, int numWorkers) {
