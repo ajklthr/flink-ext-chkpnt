@@ -2,6 +2,8 @@ package edu.uiuc.cs.extchk.graph;
 
 import edu.uiuc.cs.extchk.flink.dag.FlinkDataflowDAG;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,11 +17,15 @@ public class CausalStateGraph {
   }
 
   public AbstractOperatorCausalStateNode getNthStateForOperatorId(String operatorId, int n) {
-    return null;
+    AbstractOperatorCausalStateNode pointer = getEarliestStateNodeForOperatorId(operatorId);
+    for (int i = 0; i < n; i++) {
+      pointer = pointer.getParent();
+    }
+    return pointer;
   }
 
   private Set<String> getAllOperators() {
-    return null;
+    return new HashSet<>(new HashSet<>(Arrays.asList("1","2","3","4")));
   }
 
   public void addNode(OperatorCausalStateNode operatorCausalStateNode)

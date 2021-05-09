@@ -1,6 +1,6 @@
 package edu.uiuc.cs.extchk.redis;
 
-import edu.uiuc.cs.extchk.VectorTimeStamp;
+import edu.uiuc.cs.extchk.operators.VectorTimeStamp;
 import edu.uiuc.cs.extchk.graph.CausalStateGraph;
 
 public class RedisStateUpdateHandler {

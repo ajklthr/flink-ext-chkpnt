@@ -1,4 +1,4 @@
-package edu.uiuc.cs.extchk;
+package edu.uiuc.cs.extchk.operators;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,13 @@ public class VectorTimeStamp {
     VT = new ArrayList<Integer>();
   }
 
-  public void incrementTimeStamp(void){
-    this.VT.set(this.ID, this.VT.get(this.ID)+1)
+  public VectorTimeStamp(int indexID, ArrayList<Integer> VT) {
+    ID = indexID;
+    this.VT = VT;
+  }
+
+  public void incrementTimeStamp(){
+    this.VT.set(this.ID, this.VT.get(this.ID)+1);
   }
 
   public boolean isEarlierProcessVClockTick(VectorTimeStamp vectorTimeStamp) {

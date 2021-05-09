@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class FlinkDataflowDAG {
 
@@ -23,15 +25,19 @@ public class FlinkDataflowDAG {
   }
 
   public Set<String> getCausalUpstreamDependencies(String operatorId) {
-    return null;
+    Set<String> orderedSet = new TreeSet<>();
+    for (int i = Integer.valueOf(operatorId) - 1; i >= 1; i--) {
+      orderedSet.add(String.valueOf(i));
+    }
+    return orderedSet;
   }
 
   //create
   public int getTotalOperatorInstances() {
-    return 0;
+    return 4;
   }
 
   public String getSinkOperatorId() {
-    return null;
+    return "4";
   }
 }

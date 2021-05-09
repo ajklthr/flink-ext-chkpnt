@@ -7,7 +7,7 @@ import edu.uiuc.cs.extchk.flink.dag.FlinkDataflowDAG;
  */
 public interface ConsistentCutContext {
 
-  void isCancelled();
+  boolean isCancelled();
 
   void cancel();
 

@@ -1,6 +1,6 @@
 package edu.uiuc.cs.extchk.graph;
 
-import edu.uiuc.cs.extchk.VectorTimeStamp;
+import edu.uiuc.cs.extchk.operators.VectorTimeStamp;
 
 public class CompactedOperatorCausalStateNode extends AbstractOperatorCausalStateNode {
 

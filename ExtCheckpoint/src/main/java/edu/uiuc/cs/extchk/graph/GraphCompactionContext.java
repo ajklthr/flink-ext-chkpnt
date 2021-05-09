@@ -5,7 +5,7 @@ import edu.uiuc.cs.extchk.flink.dag.FlinkDataflowDAG;
 //TODO
 public class GraphCompactionContext {
 
-  private FlinkDataflowDAG flinkDataflowDAG;
+  protected FlinkDataflowDAG flinkDataflowDAG;
   private boolean terminated;
 
   public GraphCompactionContext(FlinkDataflowDAG flinkDataflowDAG) {
