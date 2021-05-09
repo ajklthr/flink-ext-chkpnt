@@ -16,13 +16,15 @@ public class OperatorCausalStateNode extends AbstractOperatorCausalStateNode {
 
   private Map<Integer, Integer> outChannelStates;
 
-  public OperatorCausalStateNode(){}
 
   public OperatorCausalStateNode(byte[] state, Map<Integer, Integer> inChannelStates,
-                                 Map<Integer, Integer> outChannelStates) {
+                                 Map<Integer, Integer> outChannelStates, String operatorID) {
     this.state = state;
     this.inChannelStates = inChannelStates;
     this.outChannelStates = outChannelStates;
+    this.operatorId = operatorID;
+    this.isOrdered = false;
+
   }
 
 
