@@ -23,12 +23,12 @@ public class CheckpointContextImpl implements ConsistentCutContext {
 
   @Override
   public void isCancelled() {
-
+    return this.cancel;
   }
 
   @Override
   public void cancel() {
-
+    this.cancel = True;
   }
 
   @Override
