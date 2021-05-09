@@ -11,6 +11,10 @@ public class VectorTimeStamp {
     VT = new ArrayList<int>;
   }
 
+  public void incrementTimeStamp(void){
+    this.VT.set(this.ID, this.VT.get(this.ID)+1)
+  }
+
   public boolean isEarlierProcessVClockTick(VectorTimeStamp vectorTimeStamp) {
     if(vectorTimeStamp.ID < this.ID){
       return true;

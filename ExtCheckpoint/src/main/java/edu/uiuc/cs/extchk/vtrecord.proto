@@ -1,0 +1,9 @@
+syntax = "proto2";
+
+
+option java_multiple_files = true;
+
+message VTState {
+  optional int32 offset = 1;
+  repeated int32 vt = 2;
+}
