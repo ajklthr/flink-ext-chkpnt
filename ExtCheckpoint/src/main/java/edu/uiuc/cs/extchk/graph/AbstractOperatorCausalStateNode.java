@@ -1,6 +1,6 @@
 package edu.uiuc.cs.extchk.graph;
 
-import edu.uiuc.cs.extchk.VectorTimeStamp;
+import edu.uiuc.cs.extchk.operators.VectorTimeStamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

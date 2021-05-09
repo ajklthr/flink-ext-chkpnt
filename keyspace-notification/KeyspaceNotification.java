@@ -1,6 +1,8 @@
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
+import java.util.Locale;
+
 
 /**
  * Uses Jedis
@@ -21,6 +23,10 @@ public class KeyspaceNotification {
                 System.out.print("[Pattern:" + pattern + "]");
                 System.out.print("[Channel: " + channel + "]");
                 System.out.println("[Message: " + message + "]");
+
+                if (!message.toLowerCase().equals("set")) {
+                    System.out.println("[Value: " + jedis.get(message) + "]");
+                }
             }
         }, "__key*__:*");
 
