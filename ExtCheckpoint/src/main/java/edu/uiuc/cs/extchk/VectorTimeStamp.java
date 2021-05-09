@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class VectorTimeStamp {
   public int ID;
-  public ArrayList<int> VT;
+  public ArrayList<Integer> VT;
 
   public VectorTimeStamp(int indexID) {
     ID = indexID;
-    VT = new ArrayList<int>;
+    VT = new ArrayList<Integer>();
   }
 
   public boolean isEarlierProcessVClockTick(VectorTimeStamp vectorTimeStamp) {
